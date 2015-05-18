@@ -1,3 +1,7 @@
+Modifications Made
+==================
+I set this up where it checks out the PERSISTANT_STORAGE file from the git repo hosting the code and then makes a directory in /opt/dokku/app_name with each line in the PERSISTENT_STORAGE file
+
 DEPRECIATED
 ===========
 

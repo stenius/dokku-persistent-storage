@@ -6,6 +6,8 @@ APP="$1"; PHASE="$2"
 PERSISTENT_FILE="PERSISTENT_STORAGE"
 PERSISTENT_FILE_PATH="$DOKKU_ROOT/$APP/$PERSISTENT_FILE"
 
+(git archive --remote=$DOKKU_ROOT/$APP HEAD: PERSISTENT_STORAGE | ifne tar -x -C $DOKKU_ROOT/$APP) 2> /dev/null || true
+
 output=""
 if [[ -f "$PERSISTENT_FILE_PATH" ]] && [[ "$PHASE" != "build" ]]; then
   DONE=false
@@ -17,7 +19,8 @@ if [[ -f "$PERSISTENT_FILE_PATH" ]] && [[ "$PHASE" != "build" ]]; then
         continue
         ;;
       *)
-        output="$output -v $line"
+        mkdir -p /opt/dokku/$APP/$line;
+        output="$output -v /opt/dokku/$APP/$line:/app/$line";
         ;;
     esac
   done < $PERSISTENT_FILE_PATH
